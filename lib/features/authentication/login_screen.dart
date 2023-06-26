@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/features/username_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -10,22 +12,28 @@ class LoginScreen extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
+  void _onEmailTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const EmailScreen(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.size20),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
           child: Column(
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 "TikTok에 로그인",
                 style: TextStyle(
                     fontSize: Sizes.size24, fontWeight: FontWeight.w600),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 "계정 관리, 알림 확인, 동영상에 댓글 달기 등.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -34,8 +42,32 @@ class LoginScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v20,
-              AuthButton(text: "전화 또는 이메일 사용"),
-              AuthButton(text: "전화 또는 이메일 사용"),
+              AuthButton(
+                tap: _onEmailTap,
+                icon: const FaIcon(FontAwesomeIcons.user),
+                text: "전화 / 이메일 / TikTok ID 사용",
+              ),
+              Gaps.v14,
+              AuthButton(
+                tap: _onEmailTap,
+                icon: const FaIcon(FontAwesomeIcons.apple),
+                text: "Apple로 계속 진행",
+              ),
+              Gaps.v14,
+              AuthButton(
+                tap: _onEmailTap,
+                icon: const FaIcon(FontAwesomeIcons.google),
+                text: "Google로 계속 진행",
+              ),
+              Gaps.v14,
+              AuthButton(
+                tap: _onEmailTap,
+                icon: FaIcon(
+                  FontAwesomeIcons.facebook,
+                  color: Colors.blue.shade800,
+                ),
+                text: "Facebook으로 계속 진행",
+              ),
             ],
           ),
         ),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/features/username_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  void onLoginTap(BuildContext context) {
+  void _onLoginTap(BuildContext context) {
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
@@ -29,22 +31,28 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
+  void _onEmailTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const EmailScreen(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.size20),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
           child: Column(
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 "TikTok 가입하기",
                 style: TextStyle(
                     fontSize: Sizes.size24, fontWeight: FontWeight.w600),
               ),
               Gaps.v10,
-              Text(
+              const Text(
                 "프로필 만들기, 다른 계정 팔로우, 나만의 동영상 제작 등.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -53,14 +61,38 @@ class SignUpScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v20,
-              AuthButton(text: "전화 또는 이메일 사용"),
-              AuthButton(text: "전화 또는 이메일 사용"),
+              AuthButton(
+                tap: _onEmailTap,
+                icon: const FaIcon(FontAwesomeIcons.user),
+                text: "전화 또는 이메일 사용",
+              ),
+              Gaps.v14,
+              AuthButton(
+                tap: _onEmailTap,
+                icon: const FaIcon(FontAwesomeIcons.apple),
+                text: "Apple로 계속 진행",
+              ),
+              Gaps.v14,
+              AuthButton(
+                tap: _onEmailTap,
+                icon: const FaIcon(FontAwesomeIcons.google),
+                text: "Google로 계속 진행",
+              ),
+              Gaps.v14,
+              AuthButton(
+                tap: _onEmailTap,
+                icon: FaIcon(
+                  FontAwesomeIcons.facebook,
+                  color: Colors.blue.shade800,
+                ),
+                text: "Facebook으로 계속 진행",
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: GestureDetector(
-        onTap: () => onLoginTap(context),
+        onTap: () => _onLoginTap(context),
         child: BottomAppBar(
           color: Colors.grey.shade100,
           elevation: 2,
