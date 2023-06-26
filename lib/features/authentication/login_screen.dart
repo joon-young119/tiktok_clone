@@ -12,9 +12,9 @@ class LoginScreen extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
-  void _onEmailTap(BuildContext context) {
+  void _onUsernameTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const EmailScreen(),
+      builder: (context) => const UsernameScreen(),
     ));
   }
 
@@ -43,25 +43,25 @@ class LoginScreen extends StatelessWidget {
               ),
               Gaps.v20,
               AuthButton(
-                tap: _onEmailTap,
+                tap: _onUsernameTap,
                 icon: const FaIcon(FontAwesomeIcons.user),
                 text: "전화 / 이메일 / TikTok ID 사용",
               ),
               Gaps.v14,
               AuthButton(
-                tap: _onEmailTap,
+                tap: _onUsernameTap,
                 icon: const FaIcon(FontAwesomeIcons.apple),
                 text: "Apple로 계속 진행",
               ),
               Gaps.v14,
               AuthButton(
-                tap: _onEmailTap,
+                tap: _onUsernameTap,
                 icon: const FaIcon(FontAwesomeIcons.google),
                 text: "Google로 계속 진행",
               ),
               Gaps.v14,
               AuthButton(
-                tap: _onEmailTap,
+                tap: _onUsernameTap,
                 icon: FaIcon(
                   FontAwesomeIcons.facebook,
                   color: Colors.blue.shade800,
