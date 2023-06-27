@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/onboarding/intersets_screen.dart';
 
 class BirthDayScreen extends StatefulWidget {
   const BirthDayScreen({super.key});
@@ -14,12 +15,12 @@ class BirthDayScreen extends StatefulWidget {
 class _BirthDayScreenState extends State<BirthDayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
 
-  DateTime date = DateTime.now();
+  DateTime initialDate = DateTime(DateTime.now().year - 12);
 
   @override
   void initState() {
     super.initState();
-    print(date);
+    _setTextFieldDate(initialDate);
   }
 
   @override
@@ -30,8 +31,13 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
 
   void onNextTap() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const EmailScreen(),
+      builder: (context) => const InterestsScreen(),
     ));
+  }
+
+  void _setTextFieldDate(DateTime date) {
+    final textDate = date.toString().split(" ").first;
+    _birthdayController.value = TextEditingValue(text: textDate);
   }
 
   @override
@@ -63,7 +69,6 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
             controller: _birthdayController,
             enabled: false,
             decoration: InputDecoration(
-              hintText: "생일",
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.grey.shade400,
@@ -81,6 +86,17 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
           GestureDetector(
               onTap: onNextTap, child: const FormButton(disabled: false))
         ]),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          height: 300,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            maximumDate: initialDate,
+            initialDateTime: initialDate,
+            onDateTimeChanged: _setTextFieldDate,
+          ),
+        ),
       ),
     );
   }
