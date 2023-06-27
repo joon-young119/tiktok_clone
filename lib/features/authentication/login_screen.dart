@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 
@@ -15,6 +16,12 @@ class LoginScreen extends StatelessWidget {
   void _onUsernameTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const UsernameScreen(),
+    ));
+  }
+
+  void _onEmailLoginTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const LoginFormScreen(),
     ));
   }
 
@@ -43,7 +50,7 @@ class LoginScreen extends StatelessWidget {
               ),
               Gaps.v20,
               AuthButton(
-                tap: _onUsernameTap,
+                tap: _onEmailLoginTap,
                 icon: const FaIcon(FontAwesomeIcons.user),
                 text: "전화 / 이메일 / TikTok ID 사용",
               ),
