@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/navigation/widgets/nav_tap.dart';
+import 'package:tiktok_clone/features/navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -12,24 +15,7 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 3;
-
-  final screens = [
-    const Center(
-      child: Text("home"),
-    ),
-    const Center(
-      child: Text("Search"),
-    ),
-    const Center(
-      child: Text("Search"),
-    ),
-    const Center(
-      child: Text("Search"),
-    ),
-    const Center(
-      child: Text("Search"),
-    ),
-  ];
+  bool isTaped = false;
 
   void _onTap(int index) {
     setState(() {
@@ -37,9 +23,53 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
+  void _onPostVideoButtonTab() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Scaffold(
+            appBar: AppBar(title: const Text("영상 촬영")),
+          ),
+          fullscreenDialog: true,
+        ));
+  }
+
+  void _a() {
+    setState(() {
+      isTaped = true;
+    });
+  }
+
+  void _b() {
+    setState(() {
+      isTaped = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("im built");
     return Scaffold(
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: const VideoTimelineScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 3,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4,
+            child: Container(),
+          )
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
@@ -52,24 +82,37 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               text: "홈",
               isSelected: _selectedIndex == 0,
               icon: FontAwesomeIcons.house,
+              selectedIcon: FontAwesomeIcons.house,
               onTap: () => _onTap(0),
             ),
             NavTab(
               text: "탐색",
               isSelected: _selectedIndex == 1,
-              icon: FontAwesomeIcons.magnifyingGlass,
+              icon: FontAwesomeIcons.compass,
+              selectedIcon: FontAwesomeIcons.solidCompass,
               onTap: () => _onTap(1),
             ),
+            Gaps.h24,
+            GestureDetector(
+                onTap: _onPostVideoButtonTab,
+                onTapDown: (details) => _a(),
+                onTapUp: (details) => _b(),
+                child: PostVideoButton(
+                  isTaped: isTaped,
+                )),
+            Gaps.h24,
             NavTab(
               text: "알림",
               isSelected: _selectedIndex == 3,
               icon: FontAwesomeIcons.message,
+              selectedIcon: FontAwesomeIcons.solidMessage,
               onTap: () => _onTap(3),
             ),
             NavTab(
               text: "프로필",
               isSelected: _selectedIndex == 4,
               icon: FontAwesomeIcons.user,
+              selectedIcon: FontAwesomeIcons.solidUser,
               onTap: () => _onTap(4),
             )
           ]),
