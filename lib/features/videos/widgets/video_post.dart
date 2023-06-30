@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -37,7 +39,7 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
-    _videoPlayerController.play();
+    await _videoPlayerController.setLooping(true);
     // 이걸로 동영상 실행
     //futurebuilder로 바꿔야할수도?
     setState(() {});
@@ -122,7 +124,56 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
                 ),
               ),
             ),
-          ))
+          )),
+          const Positioned(
+            bottom: 20,
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "박준영",
+                  style: TextStyle(
+                    fontSize: Sizes.size20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gaps.v10,
+                Text(
+                  "카페 공부 중 아무거나 찍음",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const Positioned(
+              bottom: 20,
+              right: 10,
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    foregroundImage: NetworkImage(
+                        "https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/278504999_3199372880382359_8450734078474215150_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jeQ0d_MDaIQAX-yEis9&_nc_ht=scontent-ssn1-1.xx&oh=00_AfAruRzeuBXA2o98njSFWDET4JAXTLb1LDDUGDSEYpRT-Q&oe=64A2C141"),
+                    child: Text("박준영"),
+                  ),
+                  Gaps.v10,
+                  VideoButton(icon: FontAwesomeIcons.solidHeart, text: "2.9M"),
+                  Gaps.v10,
+                  VideoButton(icon: FontAwesomeIcons.solidComment, text: "33K"),
+                  Gaps.v10,
+                  VideoButton(
+                      icon: FontAwesomeIcons.solidBookmark, text: "973"),
+                  Gaps.v10,
+                  VideoButton(icon: FontAwesomeIcons.share, text: "Share"),
+                ],
+              ))
         ],
       ),
     );
