@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "tiktok_clone",
+        "request": "launch",
+        "type": "dart",
+      },
+      {
+        "name": "tiktok_clone (profile mode)",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "profile",
+
+      },
+      {
+        "name": "tiktok_clone (release mode)",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "release",
+
+      }
+    ]
+  }
+  

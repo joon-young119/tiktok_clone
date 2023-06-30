@@ -14,7 +14,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 0;
   bool isTaped = false;
 
   void _onTap(int index) {
@@ -48,7 +48,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("im built");
     return Scaffold(
       body: Stack(
         children: [
