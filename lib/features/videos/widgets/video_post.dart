@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -42,8 +43,8 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
     await _videoPlayerController.setLooping(true);
     // 이걸로 동영상 실행
     //futurebuilder로 바꿔야할수도?
-    setState(() {});
     _videoPlayerController.addListener(_onVideoChange);
+    setState(() {});
   }
 
   @override
@@ -66,12 +67,20 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_videoPlayerController.value.isPlaying &&
+        !_isPaused) {
       _videoPlayerController.play();
     }
+
+    if (info.visibleFraction == 0 && _videoPlayerController.value.isPlaying) {
+      _onTogglePause();
+    }
+    //여기서 에러남. 영상 실행중에 다음영상 넘기면 dispose했는데 _onTogglepause한다고
   }
 
   void _onTogglePause() {
+    if (!mounted) return; // 이걸로 위에 에러 해결
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
       _animationController.reverse();
@@ -84,6 +93,14 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
     });
   }
 
+  void _onCommentsTap(BuildContext context) async {
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) => const VideoComments());
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -93,7 +110,9 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
         children: [
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
-                ? VideoPlayer(_videoPlayerController) //futurebuilder로 바꿔야할지도
+                ? VideoPlayer(_videoPlayerController)
+                // //futurebuilder로 바꿔야할지도
+
                 : Container(
                     color: Colors.green,
                   ),
@@ -150,12 +169,12 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
               bottom: 20,
               right: 10,
               child: Column(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
@@ -164,14 +183,19 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
                     child: Text("박준영"),
                   ),
                   Gaps.v10,
-                  VideoButton(icon: FontAwesomeIcons.solidHeart, text: "2.9M"),
+                  const VideoButton(
+                      icon: FontAwesomeIcons.solidHeart, text: "2.9M"),
                   Gaps.v10,
-                  VideoButton(icon: FontAwesomeIcons.solidComment, text: "33K"),
+                  GestureDetector(
+                      onTap: () => _onCommentsTap(context),
+                      child: const VideoButton(
+                          icon: FontAwesomeIcons.solidComment, text: "33K")),
                   Gaps.v10,
-                  VideoButton(
+                  const VideoButton(
                       icon: FontAwesomeIcons.solidBookmark, text: "973"),
                   Gaps.v10,
-                  VideoButton(icon: FontAwesomeIcons.share, text: "Share"),
+                  const VideoButton(
+                      icon: FontAwesomeIcons.share, text: "Share"),
                 ],
               ))
         ],
