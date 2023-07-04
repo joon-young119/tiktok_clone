@@ -174,10 +174,10 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                       child: Row(
                         children: [
                           const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/278504999_3199372880382359_8450734078474215150_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jeQ0d_MDaIQAX-yEis9&_nc_ht=scontent-ssn1-1.xx&oh=00_AfAruRzeuBXA2o98njSFWDET4JAXTLb1LDDUGDSEYpRT-Q&oe=64A2C141"),
-                            radius: 12,
-                          ),
+                              // backgroundImage: NetworkImage(
+                              //     "https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/278504999_3199372880382359_8450734078474215150_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jeQ0d_MDaIQAX-yEis9&_nc_ht=scontent-ssn1-1.xx&oh=00_AfAruRzeuBXA2o98njSFWDET4JAXTLb1LDDUGDSEYpRT-Q&oe=64A2C141"),
+                              // radius: 12,
+                              ),
                           Gaps.h4,
                           const Expanded(
                             child: Text(

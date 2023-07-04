@@ -39,7 +39,7 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
   }
 
   void _initVideoPlayer() async {
-    await _videoPlayerController.initialize();
+    // await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     // 이걸로 동영상 실행
     //futurebuilder로 바꿔야할수도?
@@ -176,10 +176,10 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
                 children: [
                   const CircleAvatar(
                     radius: 25,
-                    backgroundColor: Colors.black,
+                    backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
-                    foregroundImage: NetworkImage(
-                        "https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/278504999_3199372880382359_8450734078474215150_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jeQ0d_MDaIQAX-yEis9&_nc_ht=scontent-ssn1-1.xx&oh=00_AfAruRzeuBXA2o98njSFWDET4JAXTLb1LDDUGDSEYpRT-Q&oe=64A2C141"),
+                    // foregroundImage: NetworkImage(
+                    //     "https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/278504999_3199372880382359_8450734078474215150_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jeQ0d_MDaIQAX-yEis9&_nc_ht=scontent-ssn1-1.xx&oh=00_AfAruRzeuBXA2o98njSFWDET4JAXTLb1LDDUGDSEYpRT-Q&oe=64A2C141"),
                     child: Text("박준영"),
                   ),
                   Gaps.v10,
