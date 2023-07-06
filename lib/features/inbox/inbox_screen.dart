@@ -9,7 +9,7 @@ class InboxScreen extends StatelessWidget {
 
   void _onDmPressed(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const ChatScreen(),
+      builder: (context) => const ChatsScreen(),
     ));
   }
 

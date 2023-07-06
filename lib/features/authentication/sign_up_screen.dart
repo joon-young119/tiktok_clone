@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
+import 'package:tiktok_clone/features/navigation/main_navigation_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -34,6 +35,12 @@ class SignUpScreen extends StatelessWidget {
   void _onUsernameTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const UsernameScreen(),
+    ));
+  }
+
+  void _mainTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const MainNavigationScreen(),
     ));
   }
 
@@ -86,6 +93,14 @@ class SignUpScreen extends StatelessWidget {
                   color: Colors.blue.shade800,
                 ),
                 text: "Facebook으로 계속 진행",
+              ),
+              AuthButton(
+                tap: _mainTap,
+                icon: FaIcon(
+                  FontAwesomeIcons.facebook,
+                  color: Colors.blue.shade800,
+                ),
+                text: "모두 스킵하고하고 메인 페이지로",
               ),
             ],
           ),
