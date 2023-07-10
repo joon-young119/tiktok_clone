@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
@@ -64,6 +65,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    print(width);
     return DefaultTabController(
       length: 7,
       child: Scaffold(
@@ -80,8 +83,11 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 padding: const EdgeInsets.symmetric(
                   horizontal: Sizes.size32,
                 ),
-                child: SizedBox(
+                child: Container(
                   height: Sizes.size36,
+                  constraints: const BoxConstraints(
+                    maxWidth: Breakpoints.sm,
+                  ),
                   child: TextField(
                     controller: _searchEditingController,
                     textInputAction: TextInputAction.newline,
@@ -136,70 +142,74 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                   ScrollViewKeyboardDismissBehavior.onDrag, // 배경 드래그 하면 키보드 사라짐
               padding: const EdgeInsets.all(Sizes.size6),
               itemCount: 20,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                   crossAxisSpacing: Sizes.size10,
                   mainAxisSpacing: Sizes.size10,
                   childAspectRatio: 9 / 22),
-              itemBuilder: (context, index) => Column(children: [
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: AspectRatio(
-                        aspectRatio: 9 / 16,
-                        child: FadeInImage.assetNetwork(
-                          fit: BoxFit.cover,
-                          placeholder: "assets/images/photo.jpg",
-                          image:
-                              "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fCVFQiU4RiU5OSVFQiVBQyVCQ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1400&q=60",
+              itemBuilder: (context, index) => LayoutBuilder(
+                    builder: (context, constraints) => Column(children: [
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: AspectRatio(
+                          aspectRatio: 9 / 16,
+                          child: FadeInImage.assetNetwork(
+                            fit: BoxFit.cover,
+                            placeholder: "assets/images/photo.jpg",
+                            image:
+                                "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fCVFQiU4RiU5OSVFQiVBQyVCQ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1400&q=60",
+                          ),
                         ),
                       ),
-                    ),
-                    Gaps.v10,
-                    const Text(
-                      "안녕 나는 햄스터야. 자신있으면 나랑 한 따까리 해볼래? 쫄리면 뒤지시던가",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: Sizes.size16,
+                      Gaps.v10,
+                      Text(
+                        "${constraints.maxWidth}   안녕 나는 햄스터야. 자신있으면 나랑 한 따까리 해볼래? 쫄리면 뒤지시던가",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: Sizes.size16,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Gaps.v5,
-                    DefaultTextStyle(
-                      style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.bold),
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                              // backgroundImage: NetworkImage(
-                              //     "https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/278504999_3199372880382359_8450734078474215150_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jeQ0d_MDaIQAX-yEis9&_nc_ht=scontent-ssn1-1.xx&oh=00_AfAruRzeuBXA2o98njSFWDET4JAXTLb1LDDUGDSEYpRT-Q&oe=64A2C141"),
-                              // radius: 12,
+                      Gaps.v5,
+                      if (constraints.maxWidth < 200 ||
+                          constraints.maxWidth > 250)
+                        DefaultTextStyle(
+                          style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.bold),
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                  // backgroundImage: NetworkImage(
+                                  //     "https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/278504999_3199372880382359_8450734078474215150_n.jpg?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jeQ0d_MDaIQAX-yEis9&_nc_ht=scontent-ssn1-1.xx&oh=00_AfAruRzeuBXA2o98njSFWDET4JAXTLb1LDDUGDSEYpRT-Q&oe=64A2C141"),
+                                  // radius: 12,
+                                  ),
+                              Gaps.h4,
+                              const Expanded(
+                                child: Text(
+                                  "박준영박준영박준영박준영박준영",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                          Gaps.h4,
-                          const Expanded(
-                            child: Text(
-                              "박준영박준영박준영박준영박준영",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                              Gaps.h4,
+                              FaIcon(
+                                FontAwesomeIcons.heart,
+                                size: Sizes.size16,
+                                color: Colors.grey.shade600,
+                              ),
+                              Gaps.h2,
+                              const Text(
+                                "2.5M",
+                              )
+                            ],
                           ),
-                          Gaps.h4,
-                          FaIcon(
-                            FontAwesomeIcons.heart,
-                            size: Sizes.size16,
-                            color: Colors.grey.shade600,
-                          ),
-                          Gaps.h2,
-                          const Text(
-                            "2.5M",
-                          )
-                        ],
-                      ),
-                    ),
-                  ])),
+                        ),
+                    ]),
+                  )),
           for (var tab in tabs.skip(1))
             Center(
               child: Text(

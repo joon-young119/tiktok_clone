@@ -4,8 +4,21 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
+class EmailScreenArgs {
+  final String username;
+
+  EmailScreenArgs({required this.username});
+}
+
 class EmailScreen extends StatefulWidget {
-  const EmailScreen({super.key});
+  final String username;
+  const EmailScreen({
+    super.key,
+    required this.username,
+  });
+
+  // final String username;
+  static String routeName = "/email";
 
   @override
   State<EmailScreen> createState() => _EmailScreenState();
@@ -55,6 +68,8 @@ class _EmailScreenState extends State<EmailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final args = ModalRoute.of(context)?.settings.arguments as EmailScreenArgs;
+
     return GestureDetector(
       onTap: _onSaffoldTap,
       child: Scaffold(
@@ -68,9 +83,9 @@ class _EmailScreenState extends State<EmailScreen> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Gaps.v40,
-            const Text(
-              "이메일을 입력하세요.",
-              style: TextStyle(
+            Text(
+              "${widget.username}님  이메일을 입력하세요.", //${args.username} 님 이메일을 입력하ㅅ0ㅇㅅ
+              style: const TextStyle(
                 fontSize: Sizes.size20,
                 fontWeight: FontWeight.w600,
               ),

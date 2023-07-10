@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -25,6 +26,7 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
       VideoPlayerController.asset("assets/videos/video.mp4");
 
   bool _isPaused = false;
+  bool _isVolumed = false;
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   late final AnimationController _animationController;
@@ -39,10 +41,15 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
   }
 
   void _initVideoPlayer() async {
-    // await _videoPlayerController.initialize();
+    await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     // 이걸로 동영상 실행
     //futurebuilder로 바꿔야할수도?
+
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
+
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -99,6 +106,17 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
         backgroundColor: Colors.transparent,
         context: context,
         builder: (context) => const VideoComments());
+  }
+
+  void _onVolumeTap() {
+    if (_videoPlayerController.value.volume == 0) {
+      _videoPlayerController.setVolume(1);
+    } else {
+      _videoPlayerController.setVolume(0);
+    }
+    setState(() {
+      _isVolumed = !_isVolumed;
+    });
   }
 
   @override
@@ -174,6 +192,14 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
               right: 10,
               child: Column(
                 children: [
+                  GestureDetector(
+                    onTap: _onVolumeTap,
+                    child: VideoButton(
+                        icon: _isVolumed
+                            ? FontAwesomeIcons.volumeHigh
+                            : FontAwesomeIcons.volumeXmark,
+                        text: ""),
+                  ),
                   const CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.blue,

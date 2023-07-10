@@ -1,47 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
-import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
-import 'package:tiktok_clone/features/navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static const routeURL = "/";
+  static const routeName = "signUp";
+
+  // static String routeName = "/";
+
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const LoginScreen(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = const Offset(5, 0.0);
-          var end = Offset.zero;
-          var curve = Curves.ease;
+  void _onLoginTap(BuildContext context) async {
+    context.push(LoginScreen.routeName);
 
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+    // await Navigator.of(context).push(
+    //   PageRouteBuilder(
+    //     pageBuilder: (context, animation, secondaryAnimation) =>
+    //         const LoginScreen(),
+    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //       var begin = const Offset(5, 0.0);
+    //       var end = Offset.zero;
+    //       var curve = Curves.ease;
 
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        },
-      ),
-    );
+    //       var tween =
+    //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+    //       return SlideTransition(
+    //         position: animation.drive(tween),
+    //         child: child,
+    //       );
+    //     },
+    //   ),
+    // );
+    // Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 
   void _onUsernameTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const UsernameScreen(),
-    ));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UsernameScreen(),
+      ),
+    );
+
+    // Navigator.of(context).push(
+    //   PageRouteBuilder(
+    //       pageBuilder: (context, animation, secondaryAnimation) =>
+    //           const UsernameScreen(),
+    //       transitionDuration: const Duration(seconds: 1),
+    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //         final offsetAnimation = Tween(
+    //           begin: const Offset(0, -1),
+    //           end: const Offset(0, 0),
+    //         ).animate(animation);
+
+    //         return SlideTransition(
+    //           position: offsetAnimation,
+    //           child: FadeTransition(opacity: animation, child: child),
+    //         );
+    //       }),
+    // );                 //애니메이션 넣는법
+    // context.push(UsernameScreen.routeName);
+    // context.pushNamed("username_screen");
+    // context.push("/users/qwer?show=likes");
   }
 
   void _mainTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const MainNavigationScreen(),
-    ));
+    context.go("/home");
   }
 
   @override
